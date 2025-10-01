@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スピードターゲットチャレンジ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-layout">
+        <!-- スコア表示エリア -->
+        <aside class="score-area">
+            <div class="score-panel">
+                <h1 class="game-title">🎯 スピードターゲットチャレンジ</h1>
+                
+                <div class="score-display">
+                    <div class="score-item main-score">
+                        <span class="score-label">スコア</span>
+                        <span id="score" class="score-value">0</span>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">ヒット数</span>
+                        <span id="totalHits" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">ミス数</span>
+                        <span id="totalMisses" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">命中率</span>
+                        <span id="accuracy" class="stat-value">0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">レベル</span>
+                        <span id="level" class="stat-value">1</span>
+                    </div>
+                </div>
+                
+                <div class="game-controls">
+                    <button id="startButton" class="control-button start-button">ゲーム開始</button>
+                    <button id="pauseButton" class="control-button pause-button" disabled>一時停止</button>
+                    <button id="resetButton" class="control-button reset-button">リセット</button>
+                </div>
+                
+                <div class="game-info">
+                <h3>ゲーム情報</h3>
+                <div class="info-item">
+                    <span class="info-label">時間:</span>
+                    <span id="gameTime" class="info-value">0:00</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">アクティブターゲット:</span>
+                    <span id="activeTargets" class="info-value">0</span>
+                </div>
+            </div>
+
+            <div class="items-section">
+                <h3>アイテム</h3>
+                <div class="items-container">
+                    <div class="item-slot" id="doubleScoreItem">
+                        <div class="item-icon">💰</div>
+                        <div class="item-count" id="doubleScoreCount">0</div>
+                        <div class="item-name">スコア2倍</div>
+                    </div>
+                    <div class="item-slot" id="clearAllItem">
+                    <div class="item-icon">💥</div>
+                    <div class="item-count" id="clearAllCount">0</div>
+                    <div class="item-name">全消去</div>
+                </div>
+                <div class="item-slot" id="slowDownItem">
+                    <div class="item-icon">🐌</div>
+                    <div class="item-count" id="slowDownCount">0</div>
+                    <div class="item-name">スピードダウン</div>
+                </div>
+                </div>
+                <div class="item-effects">
+                    <div class="active-effect" id="doubleScoreEffect" style="display: none;">
+                        <div class="effect-icon">⚡</div>
+                        <span>スコア2倍効果中</span>
+                        <div class="effect-timer" id="doubleScoreTimer">10秒</div>
+                    </div>
+                    <div class="active-effect" id="slowDownEffect" style="display: none;">
+                        <div class="effect-icon">🐌</div>
+                        <span>スピードダウン効果中</span>
+                        <div class="effect-timer" id="slowDownTimer">15秒</div>
+                    </div>
+                </div>
+            </div>
+                
+                <div class="instructions">
+                    <h3>操作方法</h3>
+                    <ul>
+                        <li>🎯 動くターゲットをクリックしてスコアを獲得</li>
+                        <li>⚡ 高速ターゲット: 15ポイント</li>
+                        <li>💎 小型ターゲット: 25ポイント</li>
+                        <li>⭐ ボーナスターゲット: 50ポイント</li>
+                        <li>🎮 スペースキー: ゲーム開始/一時停止</li>
+                        <li>🔄 Ctrl+R: ゲームリセット</li>
+                    </ul>
+                    
+                    <h4>アイテム効果</h4>
+                    <ul>
+                        <li>💰 スコア2倍: 10秒間スコアが2倍になる (3ヒットごとに1個獲得)</li>
+                         <li>💥 全消去: 画面上の全ターゲットを一度に消去 (10ヒットごとに1個獲得)</li>
+                         <li>🐌 スピードダウン: 15秒間、すべてのターゲットの移動速度が半分になります (5ヒットごとに1個獲得)</li>
+                         <li>📱 アイテムをクリックして使用</li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- クリックエリア -->
+        <main class="click-area">
+            <div id="gameField" class="game-field">
+                <div class="field-overlay">
+                    <div id="gameStatus" class="game-status">
+                        <h2>ゲーム開始ボタンを押してください</h2>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- エフェクト用コンテナ -->
+    <div id="effectsContainer" class="effects-container"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,706 @@
+/* リセットとベーススタイル */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+    min-height: 100vh;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* ゲームレイアウト */
+.game-layout {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* スコア表示エリア */
+.score-area {
+    width: 300px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-right: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.score-panel {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* スコア表示 */
+.score-display {
+    background: linear-gradient(45deg, #ff6b6b, #feca57);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.main-score .score-label {
+    display: block;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.main-score .score-value {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 統計グリッド */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* ゲームコントロール */
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.control-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.start-button {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+}
+
+.pause-button {
+    background: linear-gradient(45deg, #ff9800, #f57c00);
+    color: white;
+}
+
+.reset-button {
+    background: linear-gradient(45deg, #f44336, #d32f2f);
+    color: white;
+}
+
+.control-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.control-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ゲーム情報 */
+.game-info {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.game-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--accent-color);
+    font-size: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.info-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.info-value {
+    color: var(--text-primary);
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* アイテムセクション */
+.items-section {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.items-section h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--accent-color);
+    font-size: 1rem;
+}
+
+.items-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.item-slot {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-slot:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.item-slot.available {
+    border-color: var(--success-color);
+    background: rgba(76, 175, 80, 0.2);
+}
+
+.item-slot.available:hover {
+    background: rgba(76, 175, 80, 0.3);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.item-slot.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(128, 128, 128, 0.1);
+}
+
+.item-slot.disabled:hover {
+    transform: none;
+    border-color: transparent;
+}
+
+.item-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.item-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    min-width: 20px;
+}
+
+.item-count.zero {
+    display: none;
+}
+
+.item-name {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* アイテム効果表示 */
+.item-effects {
+    min-height: 30px;
+}
+
+.active-effect {
+    background: linear-gradient(135deg, var(--accent-color), #ff6b35);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: pulse 2s infinite;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.effect-icon {
+    font-size: 1.2rem;
+}
+
+.effect-timer {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    margin-left: auto;
+}
+
+/* アイテム使用エフェクト */
+.item-use-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: var(--accent-color);
+    pointer-events: none;
+    animation: itemUseEffect 1s ease-out forwards;
+    z-index: 1000;
+}
+
+@keyframes itemUseEffect {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+}
+
+/* アイテム獲得エフェクト */
+.item-pickup-effect {
+    position: absolute;
+    font-size: 1.5rem;
+    color: var(--success-color);
+    pointer-events: none;
+    animation: itemPickupEffect 1.5s ease-out forwards;
+    z-index: 1000;
+}
+
+@keyframes itemPickupEffect {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.2);
+    }
+}
+
+/* 説明書 */
+.instructions {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: auto;
+}
+
+.instructions h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.instructions ul {
+    list-style: none;
+    padding: 0;
+}
+
+.instructions li {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    padding-left: 15px;
+    position: relative;
+}
+
+.instructions li::before {
+    content: "🎯";
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* クリックエリア */
+.click-area {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-field {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+    cursor: crosshair;
+}
+
+.field-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.game-status {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.game-status h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* ターゲット */
+.target {
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+.target:hover {
+    transform: scale(1.1);
+}
+
+.target.hit {
+    animation: targetHit 0.3s ease;
+}
+
+/* ターゲットの種類 */
+.target.normal {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+}
+
+.target.fast {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+}
+
+.target.small {
+    background: linear-gradient(45deg, #feca57, #ff9ff3);
+}
+
+.target.bonus {
+    background: linear-gradient(45deg, #a8edea, #fed6e3);
+    animation: bonusGlow 1s ease-in-out infinite alternate;
+}
+
+/* エフェクト */
+.effects-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.hit-effect {
+    position: absolute;
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 1.5rem;
+    animation: hitEffect 1s ease-out forwards;
+    pointer-events: none;
+}
+
+.miss-effect {
+    position: absolute;
+    color: #f44336;
+    font-weight: bold;
+    font-size: 1.2rem;
+    animation: missEffect 0.8s ease-out forwards;
+    pointer-events: none;
+}
+
+/* アニメーション */
+@keyframes targetHit {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(0); }
+}
+
+@keyframes bonusGlow {
+    0% { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+    100% { box-shadow: 0 4px 20px rgba(255, 215, 0, 0.8); }
+}
+
+@keyframes hitEffect {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.5);
+    }
+}
+
+@keyframes missEffect {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-30px) scale(1.2);
+    }
+}
+
+@keyframes scoreUpdate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.score-update {
+    animation: scoreUpdate 0.3s ease;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+    .score-area {
+        width: 250px;
+    }
+    
+    .score-panel {
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .game-title {
+        font-size: 1.5rem;
+    }
+    
+    .main-score .score-value {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-layout {
+        flex-direction: column;
+    }
+    
+    .score-area {
+        width: 100%;
+        height: 200px;
+        border-right: none;
+        border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .score-panel {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        overflow-x: auto;
+    }
+    
+    .score-display,
+    .stats-grid,
+    .game-controls,
+    .game-info {
+        flex-shrink: 0;
+        min-width: 200px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+    
+    .instructions {
+        display: none;
+    }
+    
+    .click-area {
+        height: calc(100vh - 200px);
+    }
+}
+
+@media (max-width: 480px) {
+    .score-area {
+        height: 150px;
+    }
+    
+    .score-panel {
+        padding: 8px;
+        gap: 8px;
+    }
+    
+    .game-title {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+    
+    .main-score .score-value {
+        font-size: 1.5rem;
+    }
+    
+    .stat-item {
+        padding: 10px;
+    }
+    
+    .stat-value {
+        font-size: 1.2rem;
+    }
+    
+    .control-button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .click-area {
+        height: calc(100vh - 150px);
+    }
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+    .score-area {
+        background: rgba(30, 30, 30, 0.95);
+    }
+    
+    .game-title {
+        color: #fff;
+    }
+    
+    .stat-item,
+    .game-info,
+    .instructions {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+    
+    .stat-label,
+    .info-label,
+    .instructions li {
+        color: #ccc;
+    }
+    
+    .stat-value,
+    .info-value {
+        color: #fff;
+    }
+    
+    .game-status {
+        background: rgba(30, 30, 30, 0.95);
+        color: #fff;
+    }
+    
+    .game-status h2 {
+        color: #fff;
+    }
+}
+
+/* パフォーマンス最適化 */
+.target {
+    will-change: transform, left, top;
+}
+
+.game-field {
+    will-change: contents;
+}
+
+/* アクセシビリティ */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
